@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('./models/User.js');
 const app = express();
 const port = 3000;
 
@@ -36,6 +37,18 @@ app.post('/user/save',(req,res)=>{
     const {name, email} = req.body;
     const user = {name, email};
     return res.status(200).json(user)
+})
+
+app.post('/user/add', async(req, res)=>{
+    const {name, email, age} = req.body;
+    const usuario = new User({name,email,age});
+    const salvar = await usuario.save();
+    return res.status(200).json(salvar)
+})
+
+app.get('/user/all', async (req, res)=>{
+    const users = await User.findAll();
+    return res.status(200).json(users)
 })
 
 app.listen(port,()=>{
