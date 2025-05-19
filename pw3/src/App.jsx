@@ -1,15 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SideBar from './components/Sidebar'
+import Clientes from './pages/Clientes'
+import Produtos from './pages/Produtos'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState('home')
+
+ 
+  const rendPage = () => {
+    if (currentPage === 'clientes') {
+      return <Clientes />
+    }
+    if (currentPage === 'produtos') {
+      return <Produtos />
+    }
+  }
 
   return (
     <>
-      <SideBar />
+      <div className="app">
+        <SideBar setCurrentPage={setCurrentPage} />
+        <div className="main-content">
+          {rendPage()}
+        </div>
+      </div>
     </>
   )
 }
